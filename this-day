@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+
+
+def main():
+    url = "https://ja.wikipedia.org/wiki/Wikipedia:%E4%BB%8A%E6%97%A5%E3%81%AF%E4%BD%95%E3%81%AE%E6%97%A5"
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    contents_selector = "#mw-content-text > div.mw-parser-output > div > ul > li"
+
+    contents = [n.get_text() for n in soup.select(contents_selector)]
+
+    print(datetime.today().strftime("%Y-%m-%d"))
+    for c in contents:
+        print("-", c)
+
+if __name__ == "__main__":
+    main()
